@@ -32,13 +32,22 @@ export default class Server {
         
         console.log('escuchando conexiones - sockets');
 
-        this.io.on('connection', cliente => {
+        this.io.on('connection', cliente => { 
             
-            console.log('nuevo cliente conectado');
+
+            console.log('nuevo cliente conectado con id:',cliente.id);
+            // conectar cliente
+            socket.conectarCliente(cliente,this.io);
+            // login web socket , configurar usuario 
+            socket.loginWS(cliente,this.io);
+            // escuchar/obtener usuarios activos
+            socket.obtenerUsuarios(cliente,this.io);
             // mensajes
             socket.mensaje(cliente, this.io);
             // desconectar
-            socket.desconectar(cliente);
+            socket.desconectar(cliente, this.io);
+
+            
         });
 
         
